@@ -12,7 +12,6 @@ between VLANs using physical end devices on real hardware.
 - 2x Laptops as end devices
 
 ## Network Topology
-![Topology Diagram](project1-vlan-topology.png)
 
 > Note: Raspberry Pi 4 is shown in the topology diagram 
 > and will be configured in Project 3 for SNMP monitoring 
@@ -80,3 +79,5 @@ show ip interface brief
   laptop on VLAN 30 (192.168.30.3) through R1
 
 ## Video Demo
+
+https://youtu.be/OY0Q21KyiBs
