@@ -1,20 +1,28 @@
+# SNMP Monitoring with Zabbix
 
-1. Stop the Annoying "Translating... Domain Server" HangIf you misspell a command (like typing clera instead of clear), the CLI will freeze for 30 seconds trying to look it up on the internet. Turn this off globally:textRouter(config)# no ip domain-lookup
+Extended the lab by adding centralized monitoring via SNMP and Zabbix, 
+running on a Raspberry Pi on the management VLAN (192.168.10.0/24).
 
-Use code with caution.2. Stop Log Messages from Cutting Your Sentences in HalfWhen an interface goes up or down, the status message prints directly over what you are currently typing. This command pushes the alert messages to a new line, keeping your typed command completely clean:textRouter(config)# line console 0
-Router(config-line)# logging synchronous
-Router(config-line)# exit
-Use code with caution.3. Prevent the CLI Session from Timing OutBy default, the CLI will kick you out if you don't type anything for a few minutes. Set the timeout to zero so your session stays open forever while you study:textRouter(config)# line console 0
-Router(config-line)# exec-timeout 0 0
+## What was done
+- Enabled SNMP (v2c, read-only) on R1, R2, R3, SW1, SW2
+- Advertised the management network into OSPF Area 0 so devices 
+  behind R1 (R2, R3) were reachable from the Pi
+- Added all 5 devices as hosts in Zabbix using the built-in 
+  "Cisco IOS by SNMP" template
+- Validated monitoring by simulating a link failure (disconnected SW1) 
+  and confirming Zabbix detected the outage and later marked it resolved
 
-SSH CONFIG
-The Quick Template for the Rest of Your DevicesTo avoid this error on your other routers and switches, simply add a custom name to the top of your paste script for each device:For Router 1:texthostname R1
-ip domain-name lab.com
-crypto key generate rsa general-keys modulus 1024
-username a privilege 15 secret a
-line vty 0 4
-transport input ssh
-login local
-exit
+## Key finding
+Disconnecting SW1 also broke SNMP reachability to R1, R2, R3, and SW2, 
+since their management traffic depended on that link. This highlighted 
+a single point of failure in the topology worth addressing with 
+redundant links or a separate out-of-band management path.
 
-SWITCH SSH CONFIG
+## Screenshots
+![Topology](screenshots/topology.png)
+![Zabbix Hosts](screenshots/zabbix-hosts.png)
+![Problem Detected](screenshots/problem-detected.png)
+![Problem Resolved](screenshots/problem-resolved.png)
+
+## Config
+See [configs/snmp-config.txt](configs/snmp-config.txt)
