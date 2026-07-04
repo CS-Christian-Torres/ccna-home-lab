@@ -1,0 +1,7 @@
+! Applied to R1, R2, R3, SW1, SW2
+snmp-server community dashboard RO
+snmp-server host 192.168.10.2 version 2c dashboard
+
+! OSPF advertisement so R2/R3 are reachable from the Pi
+router ospf 1
+network 192.168.10.0 0.0.0.255 area 0
