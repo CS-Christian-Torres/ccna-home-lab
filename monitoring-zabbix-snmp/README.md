@@ -18,11 +18,5 @@ since their management traffic depended on that link. This highlighted
 a single point of failure in the topology worth addressing with 
 redundant links or a separate out-of-band management path.
 
-## Screenshots
-![Topology](screenshots/topology.png)
-![Zabbix Hosts](screenshots/zabbix-hosts.png)
-![Problem Detected](screenshots/problem-detected.png)
-![Problem Resolved](screenshots/problem-resolved.png)
-
 ## Config
 See [configs/snmp-config.txt](configs/snmp-config.txt)
